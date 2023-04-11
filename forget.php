@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <?php require('./views/layout/header.php'); ?>
-
 <body>
     <?php require('./views/layout/navbar.php'); ?>
     <main>
