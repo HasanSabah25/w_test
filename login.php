@@ -4,7 +4,8 @@
 <body>
     <?php require('./views/layout/navbar');?>
     <main>
-        login form
+        login form 
+        hiii
     </main>
 </body>
 <?php require('./views/layout/footer');?>
