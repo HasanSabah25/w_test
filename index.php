@@ -1,19 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
-<?php require('./views/layout/header'); ?>
+<?php include('./views/layout/header.php'); ?>
 
 <body>
-    <?php require('./views/layout/navbar'); ?>
+    <?php include('./views/layout/navbar.php'); ?>
     <main>
+        
         <?php
+        $account=true;
         if ($account) {
-            require('./views/pages/account');
+            include('./views/pages/account.php');
         } else {
-            require('./views/pages/dashboard');
+            include('./views/pages/dashboard.php');
         }
         ?>
     </main>
+
 </body>
-<?php require('./views/layout/footer'); ?>
+<?php require('./views/layout/footer.php'); ?>
 
 </html>
