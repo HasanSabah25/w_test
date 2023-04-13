@@ -3,7 +3,7 @@
 define('DBHOST', 'localhost:3307');
 define('DBUSERNAME', 'root');
 define('DBPASSWORD', '');
-define('DBNAME', 'file_upload_assignment');
+define('DBNAME', 'laven_auth_assignment');
 
 try {
     $conn = new PDO("mysql:host=" . DBHOST . ";dbname=" . DBNAME, DBUSERNAME, DBPASSWORD);

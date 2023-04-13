@@ -4,7 +4,7 @@
             <h2>Account Sitting</h2>
             <div class="row mt-3">
                 <div class="col-3 ">
-                    <img src="https://images.unsplash.com/photo-1575936123452-b67c3203c357?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8&w=1000&q=80" class="img-fluid border border-3 border-dark mb-4 rounded-3" alt="Your Image">
+                    <img src="./asset/img/default-img.png" class="img-fluid border border-muted mb-4" alt="Your Image">
                     <div class="mb-3">
                         <label for="formFile" class="form-label">Upload Image</label>
                         <input class="form-control" type="file" id="formFile">
@@ -34,10 +34,10 @@
         </div>
     </form>
     <form action="">
-    <div class="container mt-3">
+        <div class="container mt-3">
             <div class="row mt-3 ">
-            <div class="col-3 ">
-                
+                <div class="col-3 ">
+
                 </div>
                 <div class="col col-md-9 ">
                     <div class="">
