@@ -12,6 +12,7 @@ $route = $uri[array_key_last($uri)];
 $routes = [
     'dashboard' => 'views/pages/dashboard',
     'account' => 'views/pages/account',
+    
 ];
 
 // $router->get('/account', function(){});
