@@ -15,24 +15,21 @@
                 <div class="mb-3">
                     <label for="formGroupExampleInput2" class="form-label">Full name</label>
                     <input type="text" class="form-control" id="fullName" name="fullName" placeholder="enter full name">
-                    <div class="test-denger " id="fullNameError"></div>
+                    <div class="showerror" id="fullNameError"></div>
                 </div>
-                example:dana kareem
 
                 <div class="mb-3">
                     <label for="formGroupExampleInput" class="form-label">Email</label>
                     <input type="email" class="form-control" id="email" name="email" placeholder="enter email">
-                    <div class="test-denger " id="emailError"></div>
+                    <div class="showerror" id="emailError"></div>
 
                 </div>
-                please dont forget your email
                 <div class="mb-5">
                     <label for="formGroupExampleInput2" class="form-label">password</label>
                     <input type="text" class="form-control" id="password" name="password" placeholder="enter password">
-                    <div class="test-denger " id="passwordError"></div>
+                    <div class="showerror" id="passwordError"></div>
 
                 </div>
-                minimum password length is 8 charachres
 
 
                 <button type="submit" class="btn btn-primary btn-block w-100" id="btnSignup">signup</button>
@@ -55,31 +52,34 @@
                 .then(res => res.json())
                 .then(res => {
                     if (res.status == 1) {
-                        // redirect dashboard
-                        msg.style.display = 'block';
-                        msg.style.color = 'green';
-                        msg.innerText = res.msg;
+                        fullNameError.style.display = 'none';
+                        emailError.style.display = 'none';
+                        passwordError.style.display = 'none';
                     } else {
                         if (res.loc == "fullname") {
                             fullNameError.style.display = 'block';
                             fullNameError.style.color = 'red';
                             fullNameError.innerText = res.msg;
                         }
-                         if (res.loc == "email"){
-                            fullNameError.style.display = 'block';
-                            fullNameError.style.color = 'red';
-                            fullNameError.innerText = res.msg;
+                        if (res.loc == "email") {
+                            emailError.style.display = 'block';
+                            emailError.style.color = 'red';
+                            emailError.innerText = res.msg;
                         }
-                        if(res.loc == "password"){
-                            fullNameError.style.display = 'block';
-                            fullNameError.style.color = 'red';
-                            fullNameError.innerText = res.msg;
+                        if (res.loc == "password") {
+                            passwordError.style.display = 'block';
+                            passwordError.style.color = 'red';
+                            passwordError.innerText = res.msg;
                         }
 
                     }
                     setTimeout(() => {
-                        msg.style.display = 'none';
-                    }, 5000);
+                        
+                        fullNameError.style.display = 'none';
+                        emailError.style.display = 'none';
+                        passwordError.style.display = 'none';
+
+                    }, 6000);
                 });
         }
     </script>
