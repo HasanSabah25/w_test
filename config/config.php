@@ -1,9 +1,9 @@
 <?php
 
-define('DBHOST', 'localhost:3307');
+define('DBHOST', 'localhost');
 define('DBUSERNAME', 'root');
 define('DBPASSWORD', '');
-define('DBNAME', 'file_upload_assignment');
+define('DBNAME', 'laven_auth_assinment');
 
 try {
     $conn = new PDO("mysql:host=" . DBHOST . ";dbname=" . DBNAME, DBUSERNAME, DBPASSWORD);
