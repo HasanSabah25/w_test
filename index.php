@@ -5,9 +5,9 @@
 <body>
     <?php include('./views/layout/navbar.php'); ?>
     <main>
-        
+
         <?php
-        $account=true;
+        $account = true;
         if ($account) {
             include('./views/pages/account.php');
         } else {

@@ -6,12 +6,12 @@
 // if($p == 'dashboard') require('views/pages/dashboard.php');
 // if($p == 'account') require('views/pages/account.php');
 
-$uri = explode('/', $_SERVER['REQUEST_URI']);
+$uri = explode('/',$_SERVER['REQUEST_URI']);
 $route = $uri[array_key_last($uri)];
 
 $routes = [
-    'dashboard' => 'views/pages/dashboard',
-    'account' => 'views/pages/account',
+    'dashboard' => 'views/pages/dashboard.php',
+    'account' => 'views/pages/account.php',
 ];
 
 // $router->get('/account', function(){});
