@@ -10,7 +10,7 @@
                 <h1 class=""> signup</h1>
             </div>
 
-            <form action="/controllers/auth_controllers.php" id="singupForm" name="singupForm">
+            <form action="/controllers/auth_controller.php" id="singupForm" name="singupForm">
                 <input type="hidden" name="action" value="signup">
                 <div class="mb-3">
                     <label for="formGroupExampleInput2" class="form-label">Full name</label>
@@ -45,7 +45,7 @@
             e.preventDefault();
             var formData = new FormData(form);
 
-            fetch('./controllers/auth_controllers.php', {
+            fetch('./controllers/auth-controller.php', {
                     method: 'POST',
                     body: formData
                 })
@@ -56,6 +56,18 @@
                         emailError.style.display = 'none';
                         passwordError.style.display = 'none';
                     } else {
+                        if (res.msg == "All fields are required") {
+                            // Display error message for all fields
+                            fullNameError.style.display = 'block';
+                            emailError.style.display = 'block';
+                            passwordError.style.display = 'block';
+                            fullNameError.style.color = 'red';
+                            emailError.style.color = 'red';
+                            passwordError.style.color = 'red';
+                            fullNameError.innerText = 'Full name is required';
+                            emailError.innerText = 'Email is required';
+                            passwordError.innerText = 'Password is required';
+                        }
                         if (res.loc == "fullname") {
                             fullNameError.style.display = 'block';
                             fullNameError.style.color = 'red';
@@ -74,12 +86,12 @@
 
                     }
                     setTimeout(() => {
-                        
+
                         fullNameError.style.display = 'none';
                         emailError.style.display = 'none';
                         passwordError.style.display = 'none';
 
-                    }, 6000);
+                    }, 7000);
                 });
         }
     </script>
