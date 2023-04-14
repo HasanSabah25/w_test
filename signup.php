@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <?php
-session_start();
+error_reporting(0);
 
 if (isset($_SESSION['user'])) {
     header('Location: ' . dirname(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH)) . '/dashboard');
@@ -37,8 +37,7 @@ require('./views/layout/header.php');
                 </div>
                 <div class="mb-5">
                     <label for="password" class="form-label">password</label>
-                    <input type="password" class="form-control" id="password" name="password"
-                        placeholder="enter password" autocomplete="current-password">
+                    <input type="password" class="form-control" id="password" name="password" placeholder="enter password" autocomplete="current-password">
                     <div class="showerror" id="passwordError"></div>
 
                 </div>
@@ -49,67 +48,67 @@ require('./views/layout/header.php');
 
     </main>
     <script>
-    let form = document.querySelector('#singupForm');
-    successMessage.style.display = 'none';
-    form.onsubmit = (e) => {
-        e.preventDefault();
-        var formData = new FormData(form);
+        let form = document.querySelector('#singupForm');
+        successMessage.style.display = 'none';
+        form.onsubmit = (e) => {
+            e.preventDefault();
+            var formData = new FormData(form);
 
-        fetch('./controllers/auth-controller.php', {
-                method: 'POST',
-                body: formData
-            })
-            .then(res => res.json())
-            .then(res => {
-                if (res.status == 1) {
-                    fullNameError.style.display = 'none';
-                    emailError.style.display = 'none';
-                    passwordError.style.display = 'none';
-                    successMessage.style.display = 'block';
-                    successMessage.innerText = res.msg;
-                    fullName.value = '';
-                    email.value = '';
-                    password.value = '';
+            fetch('./controllers/auth-controller.php', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(res => res.json())
+                .then(res => {
+                    if (res.status == 1) {
+                        fullNameError.style.display = 'none';
+                        emailError.style.display = 'none';
+                        passwordError.style.display = 'none';
+                        successMessage.style.display = 'block';
+                        successMessage.innerText = res.msg;
+                        fullName.value = '';
+                        email.value = '';
+                        password.value = '';
 
-                } else {
-                    if (res.msg == "All fields are required") {
-                        // Display error message for all fields
-                        fullNameError.style.display = 'block';
-                        emailError.style.display = 'block';
-                        passwordError.style.display = 'block';
-                        fullNameError.style.color = 'red';
-                        emailError.style.color = 'red';
-                        passwordError.style.color = 'red';
-                        fullNameError.innerText = 'Full name is required';
-                        emailError.innerText = 'Email is required';
-                        passwordError.innerText = 'Password is required';
+                    } else {
+                        if (res.msg == "All fields are required") {
+                            // Display error message for all fields
+                            fullNameError.style.display = 'block';
+                            emailError.style.display = 'block';
+                            passwordError.style.display = 'block';
+                            fullNameError.style.color = 'red';
+                            emailError.style.color = 'red';
+                            passwordError.style.color = 'red';
+                            fullNameError.innerText = 'Full name is required';
+                            emailError.innerText = 'Email is required';
+                            passwordError.innerText = 'Password is required';
+                        }
+                        if (res.loc == "fullname") {
+                            fullNameError.style.display = 'block';
+                            fullNameError.style.color = 'red';
+                            fullNameError.innerText = res.msg;
+                        }
+                        if (res.loc == "email") {
+                            emailError.style.display = 'block';
+                            emailError.style.color = 'red';
+                            emailError.innerText = res.msg;
+                        }
+                        if (res.loc == "password") {
+                            passwordError.style.display = 'block';
+                            passwordError.style.color = 'red';
+                            passwordError.innerText = res.msg;
+                        }
+
                     }
-                    if (res.loc == "fullname") {
-                        fullNameError.style.display = 'block';
-                        fullNameError.style.color = 'red';
-                        fullNameError.innerText = res.msg;
-                    }
-                    if (res.loc == "email") {
-                        emailError.style.display = 'block';
-                        emailError.style.color = 'red';
-                        emailError.innerText = res.msg;
-                    }
-                    if (res.loc == "password") {
-                        passwordError.style.display = 'block';
-                        passwordError.style.color = 'red';
-                        passwordError.innerText = res.msg;
-                    }
+                    setTimeout(() => {
 
-                }
-                setTimeout(() => {
+                        fullNameError.style.display = 'none';
+                        emailError.style.display = 'none';
+                        passwordError.style.display = 'none';
 
-                    fullNameError.style.display = 'none';
-                    emailError.style.display = 'none';
-                    passwordError.style.display = 'none';
-
-                }, 7000);
-            });
-    }
+                    }, 7000);
+                });
+        }
     </script>
 </body>
 <?php require('./views/layout/footer.php'); ?>

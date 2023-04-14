@@ -180,30 +180,76 @@
                 });
         }
     </script>
-    <form action="">
+    <form action="/controllers/change_password.php" enctype="multipart/form-data" id="changePasswordForm" name="changePasswordForm">
+        <input type="hidden" name="action" value="changePassword">
+
         <div class="container mt-3">
             <div class="row mt-3">
                 <div class="row mt-1 mb-5">
                     <div class="col-md-3">
                     </div>
                     <div class="col-md-9">
-                        <div class="">
-                            <h3>Security</h3>
-                            <div class="mb-3">
-                                <label for="formGroupExampleInput2" class="form-label">Current password</label>
-                                <input type="text" class="form-control" id="currentpassword" placeholder="enter current password">
-                            </div>
-                            <div class="mb-3">
-                                <label for="formGroupExampleInput2" class="form-label">New password</label>
-                                <input type="text" class="form-control" id="new password" placeholder="enter new password">
-                            </div>
+                        <div class="alert alert-success" id="successchangepassword" style="display: none;"> </div>
 
-                            <button class="btn btn-primary float-end">Save password</button>
+                        <h3>Security</h3>
+                        <div class="mb-3">
+                            <label for="formGroupExampleInput2" class="form-label">Current password</label>
+                            <input type="password" class="form-control" id="currentpassword" name="currentpassword" placeholder="enter current password">
+                            <div class="showerror" id="currentpasswordError"></div>
 
                         </div>
+                        <div class="mb-3">
+                            <label for="formGroupExampleInput2" class="form-label">New password</label>
+                            <input type="password" class="form-control" id="newpassword" name="newpassword" placeholder="enter new password">
+                            <div class="showerror" id="newpasswordError"></div>
+                        </div>
+                        <button type="submit" class="btn btn-primary float-end">Save password</button>
                     </div>
                 </div>
             </div>
         </div>
     </form>
 </div>
+
+<script>
+    let changepasswordform = document.querySelector('#changePasswordForm');
+
+    changepasswordform.onsubmit = (e) => {
+        e.preventDefault();
+
+        var formData = new FormData(changepasswordform);
+
+        // successchangepassword.style.display = 'none';
+
+        fetch('./controllers/change_password.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(res => res.json())
+            .then(res => {
+
+                if (res.status == 1) {
+                    document.getElementById("changePasswordForm").reset();
+                    successchangepassword.style.display = 'block';
+                    successchangepassword.innerText = res.msg;
+                } else {
+                    if (res.loc == "currentpassword") {
+                        currentpasswordError.style.display = 'block';
+                        currentpasswordError.style.color = 'red';
+                        currentpasswordError.innerText = res.msg;
+                    }
+                    if (res.loc == "newpassword") {
+                        newpasswordError.style.display = 'block';
+                        newpasswordError.style.color = 'red';
+                        newpasswordError.innerText = res.msg;
+                    }
+                }
+                setTimeout(() => {
+                    currentpasswordError.style.display = 'none';
+                    newpasswordError.style.display = 'none';
+                    successchangepassword.style.display = 'none';
+
+                }, 6000);
+            });
+    }
+</script>

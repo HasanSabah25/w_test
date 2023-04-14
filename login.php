@@ -29,14 +29,13 @@ require('./views/layout/header.php');
                 </div>
                 <div class="mb-5">
                     <label for="password" class="form-label">password</label>
-                    <input type="password" class="form-control" id="password" name="password"
-                        placeholder="enter password">
+                    <input type="password" class="form-control" id="password" name="password" placeholder="enter password">
                     <div class="showerror" id="passwordError"></div>
 
                 </div>
 
                 <div class="form-group mb-3 ">
-                    <a href="#">Forgot password?</a>
+                    <a href="./forget.php">Forgot password?</a>
                 </div>
                 <button type="submit" class="btn btn-primary btn-block w-100" id="btnlogin">Login</button>
 
@@ -49,49 +48,49 @@ require('./views/layout/header.php');
     </main>
     <?php require('./views/layout/footer.php'); ?>
     <script>
-    let form = document.querySelector('#loginForm');
-    form.onsubmit = (e) => {
-        e.preventDefault();
+        let form = document.querySelector('#loginForm');
+        form.onsubmit = (e) => {
+            e.preventDefault();
 
-        var formData = new FormData(form);
+            var formData = new FormData(form);
 
-        fetch('./controllers/auth-controller.php', {
-                method: 'POST',
-                body: formData
-            })
-            .then(res => res.json())
-            .then(res => {
-                if (res.status == 1) {
-                    window.location.href = "dashboard";
-                } else {
-                    if (res.loc == "email") {
-                        emailError.style.display = 'block';
-                        emailError.style.color = 'red';
-                        emailError.innerText = res.msg;
+            fetch('./controllers/auth-controller.php', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(res => res.json())
+                .then(res => {
+                    if (res.status == 1) {
+                        window.location.href = "dashboard";
+                    } else {
+                        if (res.loc == "email") {
+                            emailError.style.display = 'block';
+                            emailError.style.color = 'red';
+                            emailError.innerText = res.msg;
+                        }
+                        if (res.loc == "password") {
+                            passwordError.style.display = 'block';
+                            passwordError.style.color = 'red';
+                            passwordError.innerText = res.msg;
+                        }
+                        if (res.loc == "all") {
+                            emailError.style.display = 'block';
+                            emailError.style.color = 'red';
+                            emailError.innerText = res.emailmsg;
+                            // passwrod
+                            passwordError.style.display = 'block';
+                            passwordError.style.color = 'red';
+                            passwordError.innerText = res.passwordmsg;
+                        }
+
                     }
-                    if (res.loc == "password") {
-                        passwordError.style.display = 'block';
-                        passwordError.style.color = 'red';
-                        passwordError.innerText = res.msg;
-                    }
-                    if (res.loc == "all") {
-                        emailError.style.display = 'block';
-                        emailError.style.color = 'red';
-                        emailError.innerText = res.emailmsg;
-                        // passwrod
-                        passwordError.style.display = 'block';
-                        passwordError.style.color = 'red';
-                        passwordError.innerText = res.passwordmsg;
-                    }
+                    setTimeout(() => {
+                        emailError.style.display = 'none';
+                        passwordError.style.display = 'none';
 
-                }
-                setTimeout(() => {
-                    emailError.style.display = 'none';
-                    passwordError.style.display = 'none';
-
-                }, 6000);
-            });
-    }
+                    }, 6000);
+                });
+        }
     </script>
 </body>
 
