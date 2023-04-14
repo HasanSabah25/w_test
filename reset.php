@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
-<?php require('./views/layout/header.php'); ?>
+<?php
+session_start();
+
+if (isset($_SESSION['user'])) {
+    header('Location: ' . dirname(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH)) . '/dashboard');
+    exit;
+}
+require('./views/layout/header.php');
+?>
 
 <body>
     <?php require('./views/layout/navbar.php'); ?>

@@ -1,6 +1,6 @@
 <?php
 
-define('DBHOST', 'localhost');
+define('DBHOST', 'localhost:3307');
 define('DBUSERNAME', 'root');
 define('DBPASSWORD', '');
 define('DBNAME', 'laven_auth_assignment');

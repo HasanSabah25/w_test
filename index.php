@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <?php include('./views/layout/header.php'); ?>
 
 <body>
@@ -7,15 +8,13 @@
     <main>
 
         <?php
-        $account = true;
-        if ($account) {
-            include('./views/pages/account.php');
+        if (isset($_SESSION['user'])) {
+            include('./config/router.php');
         } else {
-            include('./views/pages/dashboard.php');
+            header('Location: login.php');
         }
         ?>
     </main>
-
 </body>
 <?php require('./views/layout/footer.php'); ?>
 

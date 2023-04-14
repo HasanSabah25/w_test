@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
-<?php require('./views/layout/header.php'); ?>
+<?php
+session_start();
+
+if (isset($_SESSION['user'])) {
+    header('Location: ' . dirname(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH)) . '/dashboard');
+    exit;
+}
+require('./views/layout/header.php');
+?>
+
 <body>
     <?php require('./views/layout/navbar.php'); ?>
     <main>
@@ -15,7 +24,7 @@
                     <label for="formGroupExampleInput" class="form-label">Email</label>
                     <input type="email" class="form-control" id="email" placeholder="enter email">
                 </div>
-                
+
                 <button type="button" class="btn btn-primary btn-block w-100">Search for Email</button>
 
             </form>
