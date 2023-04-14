@@ -10,15 +10,15 @@ if (isset($_POST['action']) == "update_profile") {
 
     // 
     if (empty($full_name) && empty($email)) {
-        echo json_encode(['status' => 0, 'loc' => "all", 'msg' => ' Required']);
+        echo json_encode(['State' => false, 'loc' => "all", 'message' => ' Required']);
         exit;
     }
     if (empty($full_name) || !preg_match("/^[a-zA-Z ]*$/", $full_name)) {
-        echo json_encode(['status' => 0, 'loc' => "fullname", 'msg' => 'Please enter a valid full name.']);
+        echo json_encode(['State' => false, 'loc' => "fullname", 'message' => 'Please enter a valid full name.']);
         exit;
     }
     if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        echo json_encode(['status' => 0, 'loc' => "email", 'msg' => 'Please enter a valid email address.']);
+        echo json_encode(['State' => false, 'loc' => "email", 'message' => 'Please enter a valid email address.']);
         exit;
     }
 
@@ -48,6 +48,6 @@ if (isset($_POST['action']) == "update_profile") {
     ]);
     $_SESSION['user'] = $q->fetch(PDO::FETCH_OBJ);
 
-    echo json_encode(['status' => 1, 'loc' => "header", 'msg' => 'Profile updated']);
+    echo json_encode(['State' => true, 'loc' => "header", 'message' => 'Profile updated']);
     exit;
 }

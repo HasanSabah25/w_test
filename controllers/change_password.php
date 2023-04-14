@@ -7,11 +7,11 @@ if (isset($_POST['action']) == 'changePassword') {
     $new_password = $_POST['newpassword'];
 
     if ($_SESSION["user"]->password != md5($current_password)) {
-        echo json_encode(['status' => 0, 'loc' => "currentpassword", 'msg' => 'write correct current password']);
+        echo json_encode(['State' => false, 'loc' => "currentpassword", 'message' => 'write correct current password']);
         exit;
     }
     if (empty($new_password) || strlen($new_password) < 8) {
-        echo json_encode(['status' => 0, 'loc' => "newpassword", 'msg' => 'Please enter a valid  new password that is at least 8 character.']);
+        echo json_encode(['State' => false, 'loc' => "newpassword", 'message' => 'Please enter a valid  new password that is at least 8 character.']);
         exit;
     }
 
@@ -22,6 +22,6 @@ if (isset($_POST['action']) == 'changePassword') {
     ]);
     $_SESSION["user"]->password = md5($new_password);
 
-    echo json_encode(['status' => 1, 'loc' => "header", 'msg' => 'password changed']);
+    echo json_encode(['State' => true, 'loc' => "header", 'message' => 'password changed']);
     exit;
 }

@@ -48,30 +48,30 @@ require('./views/layout/header.php');
 
     </main>
     <script>
-        let form = document.querySelector('#singupForm');
+        let singupForm = document.querySelector('#singupForm');
         successMessage.style.display = 'none';
-        form.onsubmit = (e) => {
+        singupForm.onsubmit = (e) => {
             e.preventDefault();
-            var formData = new FormData(form);
+            var formData = new FormData(singupForm);
 
             fetch('./controllers/auth-controller.php', {
                     method: 'POST',
                     body: formData
                 })
-                .then(res => res.json())
-                .then(res => {
-                    if (res.status == 1) {
+                .then(response => response.json())
+                .then(response => {
+                    if (response.state) {
                         fullNameError.style.display = 'none';
                         emailError.style.display = 'none';
                         passwordError.style.display = 'none';
                         successMessage.style.display = 'block';
-                        successMessage.innerText = res.msg;
+                        successMessage.innerText = response.message;
                         fullName.value = '';
                         email.value = '';
                         password.value = '';
 
                     } else {
-                        if (res.msg == "All fields are required") {
+                        if (response.message == "All fields are required") {
                             // Display error message for all fields
                             fullNameError.style.display = 'block';
                             emailError.style.display = 'block';
@@ -83,20 +83,20 @@ require('./views/layout/header.php');
                             emailError.innerText = 'Email is required';
                             passwordError.innerText = 'Password is required';
                         }
-                        if (res.loc == "fullname") {
+                        if (response.loc == "fullname") {
                             fullNameError.style.display = 'block';
                             fullNameError.style.color = 'red';
-                            fullNameError.innerText = res.msg;
+                            fullNameError.innerText = response.message;
                         }
-                        if (res.loc == "email") {
+                        if (response.loc == "email") {
                             emailError.style.display = 'block';
                             emailError.style.color = 'red';
-                            emailError.innerText = res.msg;
+                            emailError.innerText = response.message;
                         }
-                        if (res.loc == "password") {
+                        if (response.loc == "password") {
                             passwordError.style.display = 'block';
                             passwordError.style.color = 'red';
-                            passwordError.innerText = res.msg;
+                            passwordError.innerText = response.message;
                         }
 
                     }

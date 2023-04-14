@@ -20,12 +20,9 @@ require('./views/layout/header.php');
             <div class="alert alert-success" id="successMessage">
 
             </div>
-            <div class="showerror" id="headerError" class="alert alert-danger">
-
-            </div>
+            
             <form action="./controllers/email.php" id="resetForm" method="post">
                 <input type="hidden" name="action" value="reset">
-                <input type="hidden" name="code" value="<?php echo $_SESSION['reset_code'] ?>">
                 <div class="mb-3">
                     <label for="password" class="form-label">Password</label>
                     <input type="password" class="form-control" name="password" id="password"
@@ -61,28 +58,34 @@ resetForm.onsubmit = (e) => {
             method: 'POST',
             body: formData
         })
-        .then(res => res.json())
-        .then(res => {
+        .then(response => response.json())
+        .then(response => {
 
-            if (res.status == 1) {
+            if (response.state) {
                 document.getElementById("resetForm").reset();
                 successMessage.style.display = 'block';
-                successMessage.innerText = res.msg;
+                successMessage.innerText = response.message;
             } else {
-                if (res.loc == "confirmpassword") {
+                if (response.loc == "confirmpassword") {
                     confirmPasswordError.style.display = 'block';
                     confirmPasswordError.style.color = 'red';
-                    confirmPasswordError.innerText = res.msg;
+                    confirmPasswordError.innerText = response.message;
                 }
-                if (res.loc == "password") {
+                if (response.loc == "password") {
                     passwordError.style.display = 'block';
                     passwordError.style.color = 'red';
-                    passwordError.innerText = res.msg;
+                    passwordError.innerText = response.message;
                 }
-                if (res.loc == "header") {
-                    headerError.style.display = 'block';
-                    headerError.style.color = 'red';
-                    headerError.innerText = res.msg;
+                if (response.loc == "header") {
+                    confirmPasswordError.style.display = 'block';
+                    confirmPasswordError.style.color = 'red';
+                    confirmPasswordError.innerText = response.message;
+                    // 
+                    passwordError.style.display = 'block';
+                    passwordError.style.color = 'red';
+                    passwordError.innerText = response.message;
+                    // 
+                    
                 }
             }
             setTimeout(() => {

@@ -1,14 +1,10 @@
 <?php
 
-define('DBHOST', 'localhost:3307');
-define('DBUSERNAME', 'root');
-define('DBPASSWORD', '');
-define('DBNAME', 'laven_auth_assignment');
-
+$db = null;
 try {
-    $conn = new PDO("mysql:host=" . DBHOST . ";dbname=" . DBNAME, DBUSERNAME, DBPASSWORD);
-
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
-    echo "Database Connection failed: " . $e->getMessage();
+    $db = new PDO("mysql:host=localhost;dbname=laven_auth_assignment;charset=utf8", 'root', '', [
+        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
+    ]);
+} catch (Exception $e) {
+    echo $e->getMessage();
 }

@@ -48,39 +48,39 @@ require('./views/layout/header.php');
     </main>
     <?php require('./views/layout/footer.php'); ?>
     <script>
-        let form = document.querySelector('#loginForm');
-        form.onsubmit = (e) => {
+        let loginForm = document.querySelector('#loginForm');
+        loginForm.onsubmit = (e) => {
             e.preventDefault();
 
-            var formData = new FormData(form);
+            var formData = new FormData(loginForm);
 
             fetch('./controllers/auth-controller.php', {
                     method: 'POST',
                     body: formData
                 })
-                .then(res => res.json())
-                .then(res => {
-                    if (res.status == 1) {
+                .then(response => response.json())
+                .then(response => {
+                    if (response.state) {
                         window.location.href = "dashboard";
                     } else {
-                        if (res.loc == "email") {
+                        if (response.loc == "email") {
                             emailError.style.display = 'block';
                             emailError.style.color = 'red';
-                            emailError.innerText = res.msg;
+                            emailError.innerText = response.message;
                         }
-                        if (res.loc == "password") {
+                        if (response.loc == "password") {
                             passwordError.style.display = 'block';
                             passwordError.style.color = 'red';
-                            passwordError.innerText = res.msg;
+                            passwordError.innerText = response.message;
                         }
-                        if (res.loc == "all") {
+                        if (response.loc == "all") {
                             emailError.style.display = 'block';
                             emailError.style.color = 'red';
-                            emailError.innerText = res.emailmsg;
+                            emailError.innerText = response.emailmessage;
                             // passwrod
                             passwordError.style.display = 'block';
                             passwordError.style.color = 'red';
-                            passwordError.innerText = res.passwordmsg;
+                            passwordError.innerText = response.passwordmessage;
                         }
 
                     }

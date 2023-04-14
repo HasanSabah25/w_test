@@ -1,62 +1,3 @@
-<!-- <div class="container mt-5">
-    <h2>Account Sitting</h2>
-
-    <div class="row">
-        <div class="col-md-3">
-            <img src="./asset/img/default-img.png" class="img-fluid border border-muted mb-4" alt="Your Image">
-            <div class="mb-3">
-                <label for="formFile" class="form-label">Upload Image</label>
-                <input class="form-control" type="file" id="formFile">
-            </div>
-        </div>
-        <div class="col-md-9">
-            <div class="">
-                <h3>Basic Information</h3>
-                <div class="mb-3">
-                    <label for="formGroupExampleInput2" class="form-label">Full name</label>
-                    <input type="text" class="form-control" id="fullname" placeholder="enter full name">
-                </div>
-                <div class="mb-3">
-                    <label for="formGroupExampleInput2" class="form-label">Phone No.</label>
-                    <input type="text" class="form-control" id="phone" placeholder="enter phone">
-                </div>
-                <div class="mb-5">
-                    <label for="formGroupExampleInput2" class="form-label">Email</label>
-                    <input type="text" class="form-control" id="email" placeholder="enter email">
-                </div>
-
-                <button class="btn btn-primary float-end">Save changes</button>
-
-            </div>
-        </div>
-    </div>
-
-    <div class="row mt-1 mb-5">
-        <div class="col-md-3">
-        </div>
-        <div class="col-md-9">
-            <div class="">
-                <h3>Security</h3>
-                <div class="mb-3">
-                    <label for="formGroupExampleInput2" class="form-label">Current password</label>
-                    <input type="text" class="form-control" id="currentpassword" placeholder="enter current password">
-                </div>
-                <div class="mb-3">
-                    <label for="formGroupExampleInput2" class="form-label">New password</label>
-                    <input type="text" class="form-control" id="new password" placeholder="enter new password">
-                </div>
-
-                <button class="btn btn-primary float-end">Save password</button>
-
-            </div>
-        </div>
-    </div>
-
-</div> -->
-
-
-
-
 
 <div>
     <form action="/controllers/update_profile_controller.php" enctype="multipart/form-data" id="updateProfileForm" name="updateProfileForm">
@@ -120,6 +61,7 @@
                     document.getElementById('phone').value = user.phone_number;
                     document.getElementById('email').value = user.email;
                     document.getElementById('profileImag').src = user.profile_img;
+                    
                 }
             };
             xhttp.open("POST", "controllers/get_user_data_controller.php", true);
@@ -128,46 +70,45 @@
 
 
 
-        let form = document.querySelector('#updateProfileForm');
+        let updateProfileForm = document.querySelector('#updateProfileForm');
         successMessage.style.display = 'none';
-        form.onsubmit = (e) => {
+        updateProfileForm.onsubmit = (e) => {
             e.preventDefault();
 
-            var formData = new FormData(form);
+            var formData = new FormData(updateProfileForm);
 
             fetch('./controllers/update_profile_controller.php', {
                     method: 'POST',
                     body: formData
                 })
-                .then(res => res.json())
-                .then(res => {
-                    console.log(res.msg);
-                    if (res.status == 1) {
+                .then(response => response.json())
+                .then(response => {
+                    if (response.State ) {
                         document.getElementById("updateProfileForm").reset();
                         emailError.style.display = 'none';
                         fullNameError.style.display = 'none';
                         fetchUserData();
                         successMessage.style.display = 'block';
-                        successMessage.innerText = res.msg;
+                        successMessage.innerText = response.message;
                     } else {
-                        if (res.loc == "email") {
+                        if (response.loc == "email") {
                             emailError.style.display = 'block';
                             emailError.style.color = 'red';
-                            emailError.innerText = res.msg;
+                            emailError.innerText = response.message;
                         }
-                        if (res.loc == "fullname") {
+                        if (response.loc == "fullname") {
                             fullNameError.style.display = 'block';
                             fullNameError.style.color = 'red';
-                            fullNameError.innerText = res.msg;
+                            fullNameError.innerText = response.message;
                         }
-                        if (res.loc == "all") {
+                        if (response.loc == "all") {
                             emailError.style.display = 'block';
                             emailError.style.color = 'red';
-                            emailError.innerText = res.msg;
+                            emailError.innerText = response.message;
                             // passwrod
                             fullNameError.style.display = 'block';
                             fullNameError.style.color = 'red';
-                            fullNameError.innerText = res.msg;
+                            fullNameError.innerText = response.message;
                         }
 
                     }
@@ -219,29 +160,27 @@
 
         var formData = new FormData(changepasswordform);
 
-        // successchangepassword.style.display = 'none';
-
         fetch('./controllers/change_password.php', {
                 method: 'POST',
                 body: formData
             })
-            .then(res => res.json())
-            .then(res => {
+            .then(response => response.json())
+            .then(response => {
 
-                if (res.status == 1) {
+                if (response.State) {
                     document.getElementById("changePasswordForm").reset();
                     successchangepassword.style.display = 'block';
-                    successchangepassword.innerText = res.msg;
+                    successchangepassword.innerText = response.message;
                 } else {
-                    if (res.loc == "currentpassword") {
+                    if (response.loc == "currentpassword") {
                         currentpasswordError.style.display = 'block';
                         currentpasswordError.style.color = 'red';
-                        currentpasswordError.innerText = res.msg;
+                        currentpasswordError.innerText = response.message;
                     }
-                    if (res.loc == "newpassword") {
+                    if (response.loc == "newpassword") {
                         newpasswordError.style.display = 'block';
                         newpasswordError.style.color = 'red';
-                        newpasswordError.innerText = res.msg;
+                        newpasswordError.innerText = response.message;
                     }
                 }
                 setTimeout(() => {

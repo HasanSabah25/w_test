@@ -1,13 +1,13 @@
 <?php
 require('../config/config.php');
 
-// $action = $_POST['action'];
+session_start();
 
 if (isset($_POST['action']) && $_POST['action'] == 'forget') {
     $email = $_POST['email'];
 
     if (empty($email)) {
-        echo json_encode(['status' => 0, 'loc' => "email", 'msg' => 'email is required.']);
+        echo json_encode(['state' => false, 'loc' => "email", 'message' => 'email is required.']);
         exit;
     }
 
@@ -28,7 +28,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'forget') {
             // create file with code and redirect to reset.php
             $filename = '../reset_codes/' . $user->id . '.txt';
             // $content = "Code: $code\n";
-            $content = "Link: http://localhost/G-Name/reset.php\n";
+            $content = "Link: http://localhost/Laven_Hussein/reset.php\n";
             file_put_contents($filename, $content);
 
             $q = $conn->prepare(
@@ -38,33 +38,33 @@ if (isset($_POST['action']) && $_POST['action'] == 'forget') {
                 'code' =>  $code,
                 'id' => $user->id,
             ]);
+
             $_SESSION['reset_code'] = $code;
 
-            echo json_encode(['status' => 1, 'msg' => "Email sent successfully go check your email."]);
+            echo json_encode(['state' => true, 'message' => "Email sent successfully go check your email."]);
         } else {
-            echo json_encode(['status' => 0, 'loc' => "email", 'msg' => 'Please enter a valid email address.']);
+            echo json_encode(['state' => false, 'loc' => "email", 'message' => 'Please enter a valid email address.']);
         }
     } catch (PDOException $e) {
-        // echo json_encode(['status'=>100, 'msg'=>$e->getMessage()]);
     }
 }
 
 if (isset($_POST['action']) && $_POST['action'] == 'reset') {
     $password = $_POST['password'];
     $confirmPassword = $_POST['confirmPassword'];
-    $code = $_POST['code'];
+    $code = $_SESSION['reset_code'];
 
     if ($password != $confirmPassword) {
-        echo json_encode(['status' => 0, 'loc' => "confirmpassword", 'msg' => 'write correct current password']);
+        echo json_encode(['state' => false, 'loc' => "confirmpassword", 'message' => 'write correct current password']);
         exit;
     }
 
     if (empty($password) || empty($confirmPassword)) {
-        echo json_encode(['status' => 0, 'loc' => "header", 'msg' => 'Please fill both fields.']);
+        echo json_encode(['state' => false, 'loc' => "header", 'message' => 'Please fill the fields.']);
         exit;
     }
     if (strlen($password) < 8) {
-        echo json_encode(['status' => 0, 'loc' => "password", 'msg' => 'Please enter a valid password that is at least 8 character.']);
+        echo json_encode(['state' => false, 'loc' => "password", 'message' => 'Please enter a valid password that is at least 8 character.']);
         exit;
     }
 
@@ -74,6 +74,6 @@ if (isset($_POST['action']) && $_POST['action'] == 'reset') {
         'code' => $code,
     ]);
 
-    echo json_encode(['status' => 1, 'loc' => "header", 'msg' => 'password changed']);
+    echo json_encode(['state' => true, 'loc' => "header", 'message' => 'password changed']);
     exit;
 }

@@ -17,8 +17,10 @@ session_start();
                     Dashboard
                 </a>
                 <div class="dropdown me-5">
+
+
                     <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="https://getbootstrap.com/docs/5.0/assets/brand/bootstrap-logo.svg" alt="" width="15" height="15" class="rounded-circle">
+                        <img src=" <?php echo ($_SESSION['user']->profile_img); ?>" alt="" width="15" height="15" class="rounded-circle">
                         <?php echo ($_SESSION['user']->full_name); ?>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-lg-start" aria-labelledby="dropdownMenu2">

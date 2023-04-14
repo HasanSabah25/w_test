@@ -38,29 +38,28 @@ require('./views/layout/header.php');
 <?php require('./views/layout/footer.php'); ?>
 
 <script>
-let form = document.querySelector('#forgetForm');
+let forgetForm = document.querySelector('#forgetForm');
 successMessage.style.display = 'none';
-form.onsubmit = (e) => {
+forgetForm.onsubmit = (e) => {
     e.preventDefault();
 
-    var formData = new FormData(form);
+    var formData = new FormData(forgetForm);
 
     fetch('./controllers/email.php', {
             method: 'POST',
             body: formData
         })
-        .then(res => res.json())
-        .then(res => {
-            if (res.status == 1) {
-                // window.location.href = "reset.php";
+        .then(response => response.json())
+        .then(response => {
+            if (response.state) {
                 successMessage.style.display = 'block';
-                successMessage.innerText = res.msg;
+                successMessage.innerText = response.message;
                 email.value = '';
             } else {
-                if (res.loc == "email") {
+                if (response.loc == "email") {
                     emailError.style.display = 'block';
                     emailError.style.color = 'red';
-                    emailError.innerText = res.msg;
+                    emailError.innerText = response.message;
                 }
 
             }
