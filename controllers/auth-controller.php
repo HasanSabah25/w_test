@@ -84,11 +84,11 @@ if ($action == 'signup') {
     }
 
     // insert new user
-    $sqluery = $conn->prepare(
+    $sql = $conn->prepare(
         'INSERT INTO `users`(`full_name`, `email`, `password`) 
          VALUES(:fullname, :email, :password)'
     );
-    $sqluery->execute([
+    $sql->execute([
         'fullname' => $full_name,
         'email' => $email,
         'password' => md5($password)
