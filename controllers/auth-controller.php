@@ -23,17 +23,17 @@ if ($action == 'login') {
     }
     try {
         // check for user in database
-        $q = $conn->prepare(
+        $sql = $conn->prepare(
             'SELECT * FROM users WHERE email = :email AND password = :password'
         );
-        $q->execute([
+        $sql->execute([
             'email' =>  $email,
             'password' => md5($password)
         ]);
-        $user = $q->fetch(PDO::FETCH_OBJ);
+        $user = $sql->fetch(PDO::FETCH_OBJ);
 
         if (!empty($user)) {
-           
+
             $_SESSION['user'] = $user;
 
             echo json_encode(['state' => true, 'message' => "successfull"]);
@@ -84,11 +84,11 @@ if ($action == 'signup') {
     }
 
     // insert new user
-    $query = $conn->prepare(
+    $sqluery = $conn->prepare(
         'INSERT INTO `users`(`full_name`, `email`, `password`) 
          VALUES(:fullname, :email, :password)'
     );
-    $query->execute([
+    $sqluery->execute([
         'fullname' => $full_name,
         'email' => $email,
         'password' => md5($password)
@@ -99,7 +99,7 @@ if ($action == 'signup') {
 }
 
 if ($action == 'logout') {
-   
+
     unset($_SESSION['user']);
     session_destroy();
     header('Location: ../login.php');

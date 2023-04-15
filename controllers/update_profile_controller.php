@@ -33,8 +33,8 @@ if (isset($_POST['action']) == "update_profile") {
         }
     }
 
-    $q = $conn->prepare('UPDATE users SET full_name=:full_name, email=:email, phone_number=:phone_number, profile_img=:profile_img  WHERE id=:id ');
-    $q->execute([
+   $sql = $conn->prepare('UPDATE users SET full_name=:full_name, email=:email, phone_number=:phone_number, profile_img=:profile_img  WHERE id=:id ');
+   $sql->execute([
         'full_name' => $full_name,
         'email' =>  $email,
         'phone_number' => $phone,
@@ -42,11 +42,11 @@ if (isset($_POST['action']) == "update_profile") {
         'id' => $_SESSION['user']->id,
     ]);
 
-    $q = $conn->prepare('SELECT * FROM users WHERE id=:id');
-    $q->execute([
+   $sql = $conn->prepare('SELECT * FROM users WHERE id=:id');
+   $sql->execute([
         'id' => $_SESSION['user']->id,
     ]);
-    $_SESSION['user'] = $q->fetch(PDO::FETCH_OBJ);
+    $_SESSION['user'] =$sql->fetch(PDO::FETCH_OBJ);
 
     echo json_encode(['State' => true, 'loc' => "header", 'message' => 'Profile updated']);
     exit;

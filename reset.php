@@ -20,19 +20,17 @@ require('./views/layout/header.php');
             <div class="alert alert-success" id="successMessage">
 
             </div>
-            
+
             <form action="./controllers/email.php" id="resetForm" method="post">
                 <input type="hidden" name="action" value="reset">
                 <div class="mb-3">
                     <label for="password" class="form-label">Password</label>
-                    <input type="password" class="form-control" name="password" id="password"
-                        placeholder="enter password">
+                    <input type="password" class="form-control" name="password" id="password" placeholder="enter password">
                     <div class="showerror" id="passwordError"></div>
                 </div>
                 <div class="mb-5">
                     <label for="Confirmpassword" class="form-label">Confirm New Password</label>
-                    <input type="password" class="form-control" name="confirmPassword" id="Confirmpassword"
-                        placeholder="confirm password">
+                    <input type="password" class="form-control" name="confirmPassword" id="Confirmpassword" placeholder="confirm password">
                     <div class="showerror" id="confirmPasswordError"></div>
                 </div>
 
@@ -44,58 +42,58 @@ require('./views/layout/header.php');
 </body>
 <?php require('./views/layout/footer.php'); ?>
 <script>
-let resetForm = document.querySelector('#resetForm');
-successMessage.style.display = 'none';
+    let resetForm = document.querySelector('#resetForm');
+    successMessage.style.display = 'none';
 
-resetForm.onsubmit = (e) => {
-    e.preventDefault();
+    resetForm.onsubmit = (e) => {
+        e.preventDefault();
 
-    var formData = new FormData(resetForm);
+        var formData = new FormData(resetForm);
 
-    // successchangepassword.style.display = 'none';
+        // successchangepassword.style.display = 'none';
 
-    fetch('./controllers/email.php', {
-            method: 'POST',
-            body: formData
-        })
-        .then(response => response.json())
-        .then(response => {
+        fetch('./controllers/email.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(response => {
 
-            if (response.state) {
-                document.getElementById("resetForm").reset();
-                successMessage.style.display = 'block';
-                successMessage.innerText = response.message;
-            } else {
-                if (response.loc == "confirmpassword") {
-                    confirmPasswordError.style.display = 'block';
-                    confirmPasswordError.style.color = 'red';
-                    confirmPasswordError.innerText = response.message;
+                if (response.state) {
+                    document.getElementById("resetForm").reset();
+                    successMessage.style.display = 'block';
+                    successMessage.innerText = response.message;
+                } else {
+                    if (response.loc == "confirmpassword") {
+                        confirmPasswordError.style.display = 'block';
+                        confirmPasswordError.style.color = 'red';
+                        confirmPasswordError.innerText = response.message;
+                    }
+                    if (response.loc == "password") {
+                        passwordError.style.display = 'block';
+                        passwordError.style.color = 'red';
+                        passwordError.innerText = response.message;
+                    }
+                    if (response.loc == "header") {
+                        confirmPasswordError.style.display = 'block';
+                        confirmPasswordError.style.color = 'red';
+                        confirmPasswordError.innerText = response.message;
+                        // 
+                        passwordError.style.display = 'block';
+                        passwordError.style.color = 'red';
+                        passwordError.innerText = response.message;
+                        // 
+
+                    }
                 }
-                if (response.loc == "password") {
-                    passwordError.style.display = 'block';
-                    passwordError.style.color = 'red';
-                    passwordError.innerText = response.message;
-                }
-                if (response.loc == "header") {
-                    confirmPasswordError.style.display = 'block';
-                    confirmPasswordError.style.color = 'red';
-                    confirmPasswordError.innerText = response.message;
-                    // 
-                    passwordError.style.display = 'block';
-                    passwordError.style.color = 'red';
-                    passwordError.innerText = response.message;
-                    // 
-                    
-                }
-            }
-            setTimeout(() => {
-                currentpasswordError.style.display = 'none';
-                newpasswordError.style.display = 'none';
-                successchangepassword.style.display = 'none';
+                setTimeout(() => {
+                    passwordError.style.display = 'none';
+                    confirmPasswordError.style.display = 'none';
+                    successMessage.style.display = 'none';
 
-            }, 6000);
-        });
-}
+                }, 6000);
+            });
+    }
 </script>
 
 </html>

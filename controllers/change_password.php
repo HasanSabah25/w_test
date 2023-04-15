@@ -15,8 +15,8 @@ if (isset($_POST['action']) == 'changePassword') {
         exit;
     }
 
-    $q = $conn->prepare('UPDATE users SET password=:password  WHERE id=:id ');
-    $q->execute([
+    $sql = $conn->prepare('UPDATE users SET password=:password  WHERE id=:id ');
+    $sql->execute([
         'password' => md5($new_password),
         'id' => $_SESSION['user']->id,
     ]);

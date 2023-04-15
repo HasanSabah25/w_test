@@ -1,8 +1,8 @@
 <?php
 
-$db = null;
+
 try {
-    $db = new PDO("mysql:host=localhost;dbname=laven_auth_assignment;charset=utf8", 'root', '', [
+    $conn = new PDO("mysql:host=localhost:3307;dbname=laven_auth_assignment;charset=utf8", 'root', '', [
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
     ]);
 } catch (Exception $e) {
